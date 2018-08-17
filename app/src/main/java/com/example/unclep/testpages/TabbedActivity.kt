@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 
 class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Int) {
-        container.setCurrentItem(uri)
+        container.setCurrentItem(2)
     }
 
     /**
@@ -85,6 +85,9 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
+            println("POSITION")
+            println(position)
+
             if(position == 0){
                 return FragmentA.newInstance((position + 1).toString(),(position + 1).toString())
 
@@ -96,6 +99,8 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
 
             }
             return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
+
+
         }
 
         override fun getCount(): Int {

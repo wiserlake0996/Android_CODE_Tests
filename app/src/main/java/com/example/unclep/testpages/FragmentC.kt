@@ -44,7 +44,7 @@ class FragmentC : Fragment() {
         val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
         val btn: Button = view.findViewById(R.id.next)
         btn.setOnClickListener{
-            onButtonPressed(1)
+            onButtonPressed(3)
 
         }
         return view
