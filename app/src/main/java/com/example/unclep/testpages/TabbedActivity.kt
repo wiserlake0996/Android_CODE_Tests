@@ -50,6 +50,8 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
                     .setAction("Action", null).show()
         }
 
+        
+
     }
 
 
@@ -93,12 +95,12 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
                 return FragmentC.newInstance((position + 1).toString(),(position + 1).toString())
 
             }
-            return PlaceholderFragment.newInstance(position + 1)
+            return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
         }
 
         override fun getCount(): Int {
             // Show 3 total pages.
-            return 3
+            return 4
         }
     }
 
