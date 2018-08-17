@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_a.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,17 +37,28 @@ class FragmentA : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_a, container, false)
+
+        val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
+        val btn: Button = view.findViewById(R.id.next)
+        btn.setOnClickListener{
+            onButtonPressed(1)
+
+        }
+        return view
+
+       // return inflater.inflate(R.layout.fragment_a, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(uri: Int) {
+        listener?.onFragmentInteraction(1)
     }
 
     override fun onAttach(context: Context) {
@@ -75,7 +88,7 @@ class FragmentA : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(uri: Int)
     }
 
     companion object {

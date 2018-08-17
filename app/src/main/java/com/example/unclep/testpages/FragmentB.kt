@@ -44,8 +44,8 @@ class FragmentB : Fragment() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(uri: Int) {
+        listener?.onFragmentInteraction(2)
     }
 
     override fun onAttach(context: Context) {
@@ -75,7 +75,7 @@ class FragmentB : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(uri: Int)
     }
 
     companion object {

@@ -18,9 +18,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_tabbed.*
 import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 
-class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Int) {
+        container.setCurrentItem(uri)
     }
 
     /**
@@ -50,7 +50,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
                     .setAction("Action", null).show()
         }
 
-        
+
 
     }
 
