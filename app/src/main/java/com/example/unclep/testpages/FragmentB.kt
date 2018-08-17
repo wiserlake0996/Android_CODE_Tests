@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +41,13 @@ class FragmentB : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_b, container, false)
+        val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
+        val btn: Button = view.findViewById(R.id.next)
+        btn.setOnClickListener{
+            onButtonPressed(1)
+
+        }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
