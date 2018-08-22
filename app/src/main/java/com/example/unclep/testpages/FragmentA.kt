@@ -31,10 +31,10 @@ class FragmentA : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentAInteractionListener? = null
 
-    lateinit var email:TextInputEditText
+    var email:TextInputEditText? = null
 
-    lateinit var password:TextInputEditText
-    lateinit var phoneNumber:TextInputEditText
+    var password:TextInputEditText? = null
+    var phoneNumber:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,23 +56,24 @@ class FragmentA : Fragment() {
         val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
         val btn: Button = view.findViewById(R.id.next)
 
-
-
         email = view.findViewById(R.id.credentialsEmail)
         password = view.findViewById(R.id.credentialsPassword)
         phoneNumber = view.findViewById(R.id.credentialsPhoneNumber)
 
+        if (param1 != null) {
+            email?.setText(param1?.email)
+            phoneNumber?.setText(param1?.phone_number)
+            password?.setText(param1?.password)
+        }
+
 
         btn.setOnClickListener{
 
-           // if(param1 == null){
-                param1 = Credentials("email.text.toString()", password.text.toString(), phoneNumber.text.toString())
-          //  }
+            val temp = Credentials(email?.text.toString(), password?.text.toString(), phoneNumber?.text.toString())
+            param1 = temp
             param1?.let {
                 param1 -> onButtonPressed(1, param1)
             }
-
-
         }
 
 
@@ -84,6 +85,11 @@ class FragmentA : Fragment() {
     fun onButtonPressed(uri: Int, credentials: Credentials) {
         listener?.onFragmentAInteraction(1, credentials)
     }
+
+    fun collectDataFromInputs(){
+
+    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

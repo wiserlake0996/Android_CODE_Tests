@@ -26,23 +26,35 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
     var credentials:Credentials? = null
 
     override fun onFragmentEInteraction(uri: Int, address: Address) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.address = address
+        container.setCurrentItem(uri)
+
     }
 
     override fun onFragmentDInteraction(uri: Int, ownerProfile: OwnerProfile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.ownerProfile = ownerProfile
+
+        /**
+         * RUM DATA SUBMITION ACTION!!
+         */
+
     }
 
     override fun onFragmentCInteraction(uri: Int, contactInformation: ContactInformation) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.contactInformation= contactInformation
+        container.setCurrentItem(uri)
+
     }
 
     override fun onFragmentBInteraction(uri: Int, businessProfile: BusinessProfile) {
+        this.businessProfile = businessProfile
+        container.setCurrentItem(uri)
 
     }
 
     override fun onFragmentAInteraction(uri: Int, cred: Credentials) {
         container.setCurrentItem(uri)
+        this.credentials = credentials
 
         println(cred?.email)
     }
