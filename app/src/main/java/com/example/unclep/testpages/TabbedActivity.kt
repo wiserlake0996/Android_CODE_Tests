@@ -1,13 +1,11 @@
 package com.example.unclep.testpages
 
-import android.net.Uri
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,9 +16,25 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_tabbed.*
 import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 
-class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener {
+class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener, FragmentE.OnFragmentInteractionListener {
+
+    lateinit var newUser:User
+    lateinit var businessProfile: BusinessProfile
+    lateinit var ownerProfile: OwnerProfile
+    lateinit var address: Address
+    var contactInformation: ContactInformation? = null
+    var credentials:Credentials? = null
+
     override fun onFragmentInteraction(uri: Int) {
-        container.setCurrentItem(2)
+        container.setCurrentItem(uri)
+
+        println(credentials)
+    }
+
+    override fun onFragmentInteraction(uri: Int, cred: Credentials) {
+        container.setCurrentItem(uri)
+
+        println(cred?.email)
     }
 
     /**
@@ -35,12 +49,15 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_tabbed)
 
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+
 
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
@@ -88,14 +105,19 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
             println("POSITION")
             println(position)
 
+            println("CONTACT DATA FROM ACTIVITY")
+            println(credentials?.email)
             if(position == 0){
-                return FragmentA.newInstance((position + 1).toString(),(position + 1).toString())
+                return FragmentA.newInstance(credentials,(position + 1).toString())
 
             }else if(position == 1){
                 return FragmentB.newInstance((position + 1).toString(),(position + 1).toString())
 
             }else if(position == 2){
                 return FragmentC.newInstance((position + 1).toString(),(position + 1).toString())
+
+            }else if (position == 3){
+                return FragmentE.newInstance((position + 1).toString(),(position + 1).toString())
 
             }
             return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())

@@ -1,14 +1,14 @@
 package com.example.unclep.testpages
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import kotlinx.android.synthetic.main.fragment_a.*
+import android.widget.EditText
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,16 +27,24 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentA : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
+    private var param1: Credentials? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    lateinit var email:TextInputEditText
+
+    lateinit var password:TextInputEditText
+    lateinit var phoneNumber:TextInputEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getSerializable(ARG_PARAM1) as Credentials?
             param2 = it.getString(ARG_PARAM2)
         }
+
+        println("The Contact Information")
+        println(param1)
 
 
     }
@@ -47,18 +55,34 @@ class FragmentA : Fragment() {
 
         val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
         val btn: Button = view.findViewById(R.id.next)
+
+
+
+        email = view.findViewById(R.id.credentialsEmail)
+        password = view.findViewById(R.id.credentialsPassword)
+        phoneNumber = view.findViewById(R.id.credentialsPhoneNumber)
+
+
         btn.setOnClickListener{
-            onButtonPressed(1)
+
+           // if(param1 == null){
+                param1 = Credentials("email.text.toString()", password.text.toString(), phoneNumber.text.toString())
+          //  }
+            param1?.let {
+                param1 -> onButtonPressed(1, param1)
+            }
+
 
         }
+
+
         return view
 
-       // return inflater.inflate(R.layout.fragment_a, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        listener?.onFragmentInteraction(1)
+    fun onButtonPressed(uri: Int, credentials: Credentials) {
+        listener?.onFragmentInteraction(1, credentials)
     }
 
     override fun onAttach(context: Context) {
@@ -88,7 +112,7 @@ class FragmentA : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Int)
+        fun onFragmentInteraction(uri: Int, credentials: Credentials)
     }
 
     companion object {
@@ -102,10 +126,10 @@ class FragmentA : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Credentials?, param2: String) =
                 FragmentA().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
+                        putSerializable(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
