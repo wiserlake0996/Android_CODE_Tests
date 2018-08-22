@@ -51,7 +51,8 @@ class FragmentE : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Int) {
-        listener?.onFragmentInteraction(uri)
+        var address:Address? = null
+        listener?.onFragmentEInteraction(uri, address!!)
     }
 
     override fun onAttach(context: Context) {
@@ -81,7 +82,7 @@ class FragmentE : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Int)
+        fun onFragmentEInteraction(uri: Int, address: Address)
     }
 
     companion object {

@@ -45,7 +45,8 @@ class FragmentD : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Int) {
-        listener?.onFragmentInteraction(uri)
+        var ownerProfile:OwnerProfile? = null
+        listener?.onFragmentDInteraction(uri, ownerProfile!!)
     }
 
     override fun onAttach(context: Context) {
@@ -75,7 +76,7 @@ class FragmentD : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Int)
+        fun onFragmentDInteraction(uri: Int, ownerProfile: OwnerProfile)
     }
 
     companion object {

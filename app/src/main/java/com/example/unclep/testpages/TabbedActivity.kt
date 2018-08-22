@@ -16,35 +16,37 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_tabbed.*
 import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 
-class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener, FragmentE.OnFragmentInteractionListener {
+class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener, FragmentE.OnFragmentInteractionListener {
 
     lateinit var newUser:User
-    lateinit var businessProfile: BusinessProfile
-    lateinit var ownerProfile: OwnerProfile
-    lateinit var address: Address
+    var businessProfile: BusinessProfile? = null
+    var ownerProfile: OwnerProfile? = null
+    var address: Address? = null
     var contactInformation: ContactInformation? = null
     var credentials:Credentials? = null
 
-    override fun onFragmentInteraction(uri: Int) {
-        container.setCurrentItem(uri)
-
-        println(credentials)
+    override fun onFragmentEInteraction(uri: Int, address: Address) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onFragmentInteraction(uri: Int, cred: Credentials) {
+    override fun onFragmentDInteraction(uri: Int, ownerProfile: OwnerProfile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFragmentCInteraction(uri: Int, contactInformation: ContactInformation) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFragmentBInteraction(uri: Int, businessProfile: BusinessProfile) {
+
+    }
+
+    override fun onFragmentAInteraction(uri: Int, cred: Credentials) {
         container.setCurrentItem(uri)
 
         println(cred?.email)
     }
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,6 +121,9 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
             }else if (position == 3){
                 return FragmentE.newInstance((position + 1).toString(),(position + 1).toString())
 
+            }else if (position == 4){
+                return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
+
             }
             return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
 
@@ -127,7 +132,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentInteractionListe
 
         override fun getCount(): Int {
             // Show 3 total pages.
-            return 4
+            return 5
         }
     }
 

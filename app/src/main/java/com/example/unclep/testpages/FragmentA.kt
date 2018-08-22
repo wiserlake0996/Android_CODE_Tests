@@ -29,7 +29,7 @@ class FragmentA : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: Credentials? = null
     private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
+    private var listener: OnFragmentAInteractionListener? = null
 
     lateinit var email:TextInputEditText
 
@@ -82,12 +82,12 @@ class FragmentA : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Int, credentials: Credentials) {
-        listener?.onFragmentInteraction(1, credentials)
+        listener?.onFragmentAInteraction(1, credentials)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
+        if (context is OnFragmentAInteractionListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
@@ -110,9 +110,9 @@ class FragmentA : Fragment() {
      * (http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnFragmentInteractionListener {
+    interface OnFragmentAInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Int, credentials: Credentials)
+        fun onFragmentAInteraction(uri: Int, credentials: Credentials)
     }
 
     companion object {

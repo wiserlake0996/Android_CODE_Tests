@@ -52,7 +52,8 @@ class FragmentC : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Int) {
-        listener?.onFragmentInteraction(3)
+        var contactInformation:ContactInformation? = null
+        listener?.onFragmentCInteraction(3, contactInformation!!)
     }
 
     override fun onAttach(context: Context) {
@@ -82,7 +83,7 @@ class FragmentC : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Int)
+        fun onFragmentCInteraction(uri: Int, contactInformation: ContactInformation)
     }
 
     companion object {
