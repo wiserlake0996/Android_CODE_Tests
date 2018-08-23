@@ -35,6 +35,8 @@ class FragmentC : Fragment() {
     private var tWebsite:TextInputEditText? = null
     private var tFacebook:TextInputEditText? = null
     private var tInstagram:TextInputEditText? = null
+    private var tTwitter:TextInputEditText? = null
+
     private var tWhatsappNumber:TextInputEditText? = null
 
     private var cContactEmail:CheckBox? = null
@@ -58,22 +60,53 @@ class FragmentC : Fragment() {
         tWebsite = view.findViewById(R.id.businessWebsite)
         tFacebook = view.findViewById(R.id.businessFacebook)
         tInstagram = view.findViewById(R.id.businessInstagram)
+        tTwitter = view.findViewById(R.id.businessTwitter)
+
         tWhatsappNumber = view.findViewById(R.id.businessWhatsapp)
 
         cContactEmail = view.findViewById(R.id.contactEmailCheckbox)
         cWhatsappNumber = view.findViewById(R.id.whatsappNumberCheckbox)
 
+        if(contactInformation != null){
+            tContactEmail?.setText(contactInformation?.email)
+            tWebsite?.setText(contactInformation?.website)
+            tFacebook?.setText(contactInformation?.social_accounts?.facebook)
+            tTwitter?.setText(contactInformation?.social_accounts?.twitter)
+            tInstagram?.setText(contactInformation?.social_accounts?.instagram)
+            tWhatsappNumber?.setText(contactInformation?.social_accounts?.whatsapp)
+        }else{
+            contactInformation = ContactInformation("",null,"",null,null,null,null)
+        }
+
         btn.setOnClickListener{
-            onButtonPressed(3)
+            collectDataFromInputs()
+
+            onButtonPressed(3, contactInformation!!)
 
         }
         return view
     }
 
+    fun collectDataFromInputs(){
+        contactInformation?.let {
+            it.email = tContactEmail?.text.toString()
+            it.website = tWebsite?.text.toString()
+            it.address = null
+            it.phone_number = null
+
+            it.social_accounts = SocialAccounts(tInstagram?.text.toString(), tTwitter?.text.toString()
+            , tFacebook?.text.toString(), tWhatsappNumber?.text.toString(), null
+            )
+
+
+
+
+        }
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        var contactInformation:ContactInformation? = null
-        listener?.onFragmentCInteraction(3, contactInformation!!)
+    fun onButtonPressed(uri: Int, contactInformation: ContactInformation) {
+        listener?.onFragmentCInteraction(3, contactInformation)
     }
 
     override fun onAttach(context: Context) {
@@ -117,11 +150,10 @@ class FragmentC : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: ContactInformation?) =
                 FragmentC().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putSerializable(ARG_PARAM1, param1)
                     }
                 }
     }

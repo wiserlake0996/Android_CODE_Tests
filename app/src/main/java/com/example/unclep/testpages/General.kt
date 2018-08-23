@@ -51,7 +51,7 @@ class OpeningHours: Serializable {
 class ContactInformation: Serializable {
 
     constructor()
-    constructor(email: String?, address: Address?, phone_number: String?, website: String?, social_accounts: SocialAccounts?, sameEmailLogin:Boolean?, sameWhatsappNumber:Boolean) {
+    constructor(email: String?, address: Address?, phone_number: String?, website: String?, social_accounts: SocialAccounts?, sameEmailLogin:Boolean?, sameWhatsappNumber:Boolean?) {
         this.email = email
         this.address = address
         this.phone_number = phone_number

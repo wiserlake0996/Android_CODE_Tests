@@ -112,14 +112,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
 
-            println("POSITION")
-            println(position)
-
-            println("CONTACT DATA FROM ACTIVITY")
-            println(credentials?.email)
             if(position == 0){
                 return FragmentA.newInstance(credentials,(position + 1).toString())
 
@@ -127,7 +120,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
                 return FragmentB.newInstance(businessProfile)
 
             }else if(position == 2){
-                return FragmentC.newInstance((position + 1).toString(),(position + 1).toString())
+                return FragmentC.newInstance(contactInformation)
 
             }else if (position == 3){
                 return FragmentE.newInstance((position + 1).toString(),(position + 1).toString())
