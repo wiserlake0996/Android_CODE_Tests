@@ -73,13 +73,13 @@ class ContactInformation: Serializable {
 }
 
 class Address: Serializable {
-    var street:String? = null
-    var other:String? = null
+    var addressLine1:String? = null
+    var addressLine2:String? = null
     constructor()
 
-    constructor(street: String?, other: String?, city: String?, state: String?, country: String?) {
-        this.street = street
-        this.other = other
+    constructor(addressLine1: String?, addressLine2: String?, city: String?, state: String?, country: String?) {
+        this.addressLine1 = addressLine1
+        this.addressLine2 = addressLine2
         this.city = city
         this.state = state
         this.country = country
@@ -112,15 +112,15 @@ class OwnerProfile: Serializable {
     var name:String? = null
     var email:String? = null
 
-    constructor(name: String?, email: String?, phone_number: String?, address: Address?) {
+    constructor(name: String?, email: String?, phone_number: String?, lastName: String?) {
         this.name = name
         this.email = email
         this.phone_number = phone_number
-        this.address = address
+        this.lastName = lastName
     }
     constructor()
     var phone_number:String? = null
-    var address:Address?= null
+    var lastName:String?= null
 }
 
 class BusinessProfile: Serializable {

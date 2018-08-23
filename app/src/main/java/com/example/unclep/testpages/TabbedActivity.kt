@@ -31,7 +31,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
 
     }
 
-    override fun onFragmentDInteraction(uri: Int, ownerProfile: OwnerProfile) {
+    override fun onFragmentDInteraction(ownerProfile: OwnerProfile) {
         this.ownerProfile = ownerProfile
 
         /**
@@ -123,13 +123,13 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
                 return FragmentC.newInstance(contactInformation)
 
             }else if (position == 3){
-                return FragmentE.newInstance((position + 1).toString(),(position + 1).toString())
+                return FragmentE.newInstance(contactInformation?.address)
 
             }else if (position == 4){
-                return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
+                return FragmentD.newInstance(ownerProfile)
 
             }
-            return FragmentD.newInstance((position + 1).toString(),(position + 1).toString())
+            return FragmentD.newInstance(ownerProfile)
 
 
         }

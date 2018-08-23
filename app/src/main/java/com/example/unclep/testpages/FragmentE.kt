@@ -3,6 +3,7 @@ package com.example.unclep.testpages
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,15 +27,19 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentE : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var address:Address? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    private var tAddressLine1:TextInputEditText? = null
+    private var tAddressLine2:TextInputEditText? = null
+    private var tAddressCity:TextInputEditText? = null
+    private var tAddressState:TextInputEditText? = null
+    private var tAddressCountry:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            address = it.getSerializable(ARG_PARAM1) as Address?
         }
     }
 
@@ -43,16 +48,47 @@ class FragmentE : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater!!.inflate(R.layout.fragment_e, container, false)
         val btn: Button = view.findViewById(R.id.next)
+
+        tAddressLine1 = view.findViewById(R.id.addressLine1)
+        tAddressLine2 = view.findViewById(R.id.addressLine2)
+        tAddressCity = view.findViewById(R.id.addressCity)
+        tAddressState = view.findViewById(R.id.addressState)
+        tAddressCountry = view.findViewById(R.id.addressCountry)
+
+        if(address != null){
+            tAddressCity?.setText(address?.city)
+            tAddressCountry?.setText(address?.country)
+            tAddressState?.setText(address?.state)
+            tAddressLine1?.setText(address?.addressLine1)
+            tAddressLine2?.setText(address?.addressLine2)
+
+        }else{
+            address = Address("","","","","")
+        }
+
         btn.setOnClickListener{
-            onButtonPressed(4)
+            collectDataFromInputs()
+            onButtonPressed(4, address!!)
 
         }
-        return view    }
+        return view
+    }
+
+    fun collectDataFromInputs(){
+        address?.let {
+            it.addressLine2 = tAddressLine2?.text.toString()
+            it.addressLine1 = tAddressLine1?.text.toString()
+            it.city = tAddressCity?.text.toString()
+            it.state = tAddressState?.text.toString()
+            it.country = tAddressCountry?.text.toString()
+
+            println("Param Object updated")
+        }
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        var address:Address? = null
-        listener?.onFragmentEInteraction(uri, address!!)
+    fun onButtonPressed(uri: Int, address: Address) {
+        listener?.onFragmentEInteraction(uri, address)
     }
 
     override fun onAttach(context: Context) {
@@ -96,11 +132,10 @@ class FragmentE : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(address: Address?) =
                 FragmentE().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putSerializable(ARG_PARAM1, address)
                     }
                 }
     }

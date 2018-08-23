@@ -48,7 +48,7 @@
             android:layout_marginTop="16dp">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/businessCity"
+                android:id="@+id/addressCity"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_marginTop="16dp">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/businessState"
+                android:id="@+id/addressState"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:passwordToggleEnabled="true">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/businessCountry"
+                android:id="@+id/addressCountry"
                 android:layout_width="match_parent"
                 android:inputType="text"
                 android:layout_height="wrap_content"

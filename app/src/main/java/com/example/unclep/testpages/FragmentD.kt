@@ -3,10 +3,13 @@ package com.example.unclep.testpages
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import java.security.acl.Owner
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,28 +28,64 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentD : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var ownerProfile: OwnerProfile? = null
     private var listener: OnFragmentInteractionListener? = null
+
+
+    private var tFirstName:TextInputEditText? = null
+    private var tLastName:TextInputEditText? = null
+    private var tEmail:TextInputEditText? = null
+    private var tPhoneNumber:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            ownerProfile = it.getSerializable(ARG_PARAM1) as OwnerProfile?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_d, container, false)
+
+        val view: View = inflater!!.inflate(R.layout.fragment_d, container, false)
+        val btn: Button = view.findViewById(R.id.submitButton)
+
+        tEmail = view.findViewById(R.id.ownerEmail)
+        tPhoneNumber = view.findViewById(R.id.ownerPhoneNumber)
+        tFirstName = view.findViewById(R.id.ownerFirstName)
+        tLastName = view.findViewById(R.id.ownerLastName)
+
+
+        if(ownerProfile != null){
+            tEmail?.setText(ownerProfile?.email)
+            tPhoneNumber?.setText(ownerProfile?.phone_number)
+            tFirstName?.setText(ownerProfile?.name)
+            tLastName?.setText(ownerProfile?.lastName)
+        }else{
+            ownerProfile = OwnerProfile("","","","")
+        }
+
+        btn.setOnClickListener{
+            collectDataFromInputs()
+            onButtonPressed(ownerProfile)
+        }
+
+        return view
+    }
+
+    fun collectDataFromInputs(){
+        ownerProfile?.let {
+            it.lastName = tLastName?.text.toString()
+            it.name = tFirstName?.text.toString()
+            it.phone_number = tPhoneNumber?.text.toString()
+            it.email = tEmail?.text.toString()
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        var ownerProfile:OwnerProfile? = null
-        listener?.onFragmentDInteraction(uri, ownerProfile!!)
+    fun onButtonPressed(ownerProfile: OwnerProfile?) {
+        listener?.onFragmentDInteraction(ownerProfile!!)
     }
 
     override fun onAttach(context: Context) {
@@ -76,7 +115,7 @@ class FragmentD : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentDInteraction(uri: Int, ownerProfile: OwnerProfile)
+        fun onFragmentDInteraction(ownerProfile: OwnerProfile)
     }
 
     companion object {
@@ -90,11 +129,10 @@ class FragmentD : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(ownerProfile: OwnerProfile?) =
                 FragmentD().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putSerializable(ARG_PARAM1, ownerProfile)
                     }
                 }
     }
