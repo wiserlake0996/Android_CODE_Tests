@@ -3,11 +3,13 @@ package com.example.unclep.testpages
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,15 +28,23 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentC : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var contactInformation: ContactInformation? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    private var tContactEmail:TextInputEditText? = null
+    private var tWebsite:TextInputEditText? = null
+    private var tFacebook:TextInputEditText? = null
+    private var tInstagram:TextInputEditText? = null
+    private var tWhatsappNumber:TextInputEditText? = null
+
+    private var cContactEmail:CheckBox? = null
+    private var cWhatsappNumber:CheckBox?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            contactInformation = it.getSerializable(ARG_PARAM1) as ContactInformation?
         }
     }
 
@@ -43,6 +53,16 @@ class FragmentC : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater!!.inflate(R.layout.fragment_c, container, false)
         val btn: Button = view.findViewById(R.id.next)
+
+        tContactEmail = view.findViewById(R.id.businessEmail)
+        tWebsite = view.findViewById(R.id.businessWebsite)
+        tFacebook = view.findViewById(R.id.businessFacebook)
+        tInstagram = view.findViewById(R.id.businessInstagram)
+        tWhatsappNumber = view.findViewById(R.id.businessWhatsapp)
+
+        cContactEmail = view.findViewById(R.id.contactEmailCheckbox)
+        cWhatsappNumber = view.findViewById(R.id.whatsappNumberCheckbox)
+
         btn.setOnClickListener{
             onButtonPressed(3)
 

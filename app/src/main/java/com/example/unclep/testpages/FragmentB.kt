@@ -131,7 +131,7 @@ class FragmentB : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: BusinessProfile) =
+        fun newInstance(param1: BusinessProfile?) =
                 FragmentB().apply {
                     arguments = Bundle().apply {
                         putSerializable(ARG_PARAM1, param1)

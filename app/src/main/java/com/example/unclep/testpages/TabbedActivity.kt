@@ -54,9 +54,8 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
 
     override fun onFragmentAInteraction(uri: Int, cred: Credentials) {
         container.setCurrentItem(uri)
-        this.credentials = credentials
+        this.credentials = cred
 
-        println(cred?.email)
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -125,7 +124,7 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
                 return FragmentA.newInstance(credentials,(position + 1).toString())
 
             }else if(position == 1){
-                return FragmentB.newInstance((position + 1).toString(),(position + 1).toString())
+                return FragmentB.newInstance(businessProfile)
 
             }else if(position == 2){
                 return FragmentC.newInstance((position + 1).toString(),(position + 1).toString())
