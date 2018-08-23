@@ -32,9 +32,9 @@ class FragmentA : Fragment() {
     private var listener: OnFragmentAInteractionListener? = null
 
     var email:TextInputEditText? = null
-
     var password:TextInputEditText? = null
     var phoneNumber:TextInputEditText? = null
+    var username:TextInputEditText?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +42,6 @@ class FragmentA : Fragment() {
             param1 = it.getSerializable(ARG_PARAM1) as Credentials?
             param2 = it.getString(ARG_PARAM2)
         }
-
-        println("The Contact Information")
-        println(param1)
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -56,29 +51,33 @@ class FragmentA : Fragment() {
         val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
         val btn: Button = view.findViewById(R.id.next)
 
+        //Initialize view components
         email = view.findViewById(R.id.credentialsEmail)
         password = view.findViewById(R.id.credentialsPassword)
         phoneNumber = view.findViewById(R.id.credentialsPhoneNumber)
+        username = view.findViewById(R.id.businessUsername)
 
+        /**
+         * Check if credential value is null, if so initialize else set the components with the credentials value
+         */
         if (param1 != null) {
             email?.setText(param1?.email)
             phoneNumber?.setText(param1?.phone_number)
             password?.setText(param1?.password)
+            username?.setText(param1?.username)
+        }else{
+            param1 = Credentials("", "","", "")
         }
 
-
+        /**
+         * When the next button is clicked, send data back to the activity and open the next fragment
+         */
         btn.setOnClickListener{
-
-            val temp = Credentials(email?.text.toString(), password?.text.toString(), phoneNumber?.text.toString())
-            param1 = temp
-            param1?.let {
-                param1 -> onButtonPressed(1, param1)
-            }
+            collectDataFromInputs()
+            onButtonPressed(1, param1!!)
         }
-
 
         return view
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -87,7 +86,14 @@ class FragmentA : Fragment() {
     }
 
     fun collectDataFromInputs(){
+        param1?.let {
+            it.phone_number = phoneNumber?.text.toString()
+            it.password = password?.text.toString()
+            it.email = email?.text.toString()
+            it.username = username?.text.toString()
 
+            println("Param Object updated")
+        }
     }
 
 

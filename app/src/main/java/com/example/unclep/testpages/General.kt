@@ -23,9 +23,11 @@ import java.lang.reflect.Constructor
 class Credentials:Serializable{
     var email:String
     var password:String
+    var username:String
     var phone_number:String
-    constructor(email: String, password:String, phone_number: String){
+    constructor(email: String, username:String, password:String, phone_number: String){
         this.email = email
+        this.username = username
         this.password = password
         this.phone_number = phone_number
     }
@@ -118,19 +120,17 @@ class OwnerProfile: Serializable {
 
 class BusinessProfile: Serializable {
     var name:String = ""
-    var business_id:String? = ""
     var description:String = ""
 
 
 
     var category:String = ""
-    var tags:ArrayList<String> = ArrayList()
+    var tags:ArrayList<String>? = null
     var contact_information:ContactInformation? = null
     var opening_hours:ArrayList<OpeningHours>? = null
     constructor()
-    constructor(name: String, business_id: String?, description: String, category: String, tags: ArrayList<String>, contact_information: ContactInformation?, opening_hours: ArrayList<OpeningHours>?) {
+    constructor(name: String, description: String, category: String, tags: ArrayList<String>?, contact_information: ContactInformation?, opening_hours: ArrayList<OpeningHours>?) {
         this.name = name
-        this.business_id = business_id
         this.description = description
         this.category = category
         this.tags = tags

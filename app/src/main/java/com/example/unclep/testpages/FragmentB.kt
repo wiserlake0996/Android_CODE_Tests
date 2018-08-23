@@ -3,6 +3,7 @@ package com.example.unclep.testpages
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import android.widget.Button
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -26,15 +26,18 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentB : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var businessProfile: BusinessProfile? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    private var tName:TextInputEditText? = null
+    private var tCategory:TextInputEditText? = null
+    private var tDescription:TextInputEditText? = null
+    private var tTags:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            businessProfile = it.getSerializable(ARG_PARAM1) as BusinessProfile?
         }
     }
 
@@ -43,17 +46,48 @@ class FragmentB : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater!!.inflate(R.layout.fragment_b, container, false)
         val btn: Button = view.findViewById(R.id.next)
-        btn.setOnClickListener{
-            onButtonPressed(2)
 
+        tName = view.findViewById(R.id.businessName)
+        tCategory = view.findViewById(R.id.businessCategory)
+        tDescription = view.findViewById(R.id.businessDescription)
+        tTags = view.findViewById(R.id.businessTags)
+        /**
+         * Check if credential value is null, if so initialize else set the components with the credentials value
+         */
+        if(businessProfile != null){
+            tName?.setText(businessProfile?.name)
+            tCategory?.setText(businessProfile?.category)
+            tDescription?.setText(businessProfile?.description)
+            val toSt = businessProfile?.tags?.joinToString(",")
+            tTags?.setText(toSt)
+        }else{
+            businessProfile = BusinessProfile("","","",null,null,null)
         }
+        /**
+         * When the next button is clicked, send data back to the activity and open the next fragment
+         */
+        btn.setOnClickListener{
+            collectDataFromInputs()
+            onButtonPressed(2, businessProfile!!)
+        }
+
         return view
     }
 
+    fun collectDataFromInputs(){
+        businessProfile?.let {
+            it.name = tName?.text.toString()
+            it.category = tCategory?.text.toString()
+            it.tags = null// tTags?.text.toString()
+            it.description = tDescription?.text.toString()
+
+            println("Param Object updated")
+        }
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        var businessProfile:BusinessProfile? = null
-        listener?.onFragmentBInteraction(2, businessProfile!!)
+    fun onButtonPressed(uri: Int, businessProfile: BusinessProfile) {
+        listener?.onFragmentBInteraction(2, businessProfile)
     }
 
     override fun onAttach(context: Context) {
@@ -97,11 +131,10 @@ class FragmentB : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: BusinessProfile) =
                 FragmentB().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putSerializable(ARG_PARAM1, param1)
                     }
                 }
     }
