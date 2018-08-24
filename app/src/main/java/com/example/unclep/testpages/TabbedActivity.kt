@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_tabbed.*
 import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 
-class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionListener, FragmentB.OnFragmentInteractionListener, FragmentC.OnFragmentInteractionListener, FragmentD.OnFragmentInteractionListener, FragmentE.OnFragmentInteractionListener {
+class TabbedActivity : AppCompatActivity(), RegistrationFragmentA.OnRegistrationFragmentAInteractionListener, RegistrationFragmentB.OnFragmentInteractionListener, RegistrationFragmentC.OnFragmentInteractionListener, RegistrationFragmentE.OnFragmentInteractionListener, RegistrationFragmentD.OnFragmentInteractionListener {
 
     lateinit var newUser:User
     var businessProfile: BusinessProfile? = null
@@ -25,34 +25,34 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
     var contactInformation: ContactInformation? = null
     var credentials:Credentials? = null
 
-    override fun onFragmentEInteraction(uri: Int, address: Address) {
+    override fun onRegistrationFragmentDInteraction(uri: Int, address: Address) {
         this.address = address
         container.setCurrentItem(uri)
 
     }
 
-    override fun onFragmentDInteraction(ownerProfile: OwnerProfile) {
+    override fun onRegistrationFragmentEInteraction(ownerProfile: OwnerProfile) {
         this.ownerProfile = ownerProfile
 
         /**
          * RUM DATA SUBMITION ACTION!!
          */
-
+        println(ownerProfile.toString())
     }
 
-    override fun onFragmentCInteraction(uri: Int, contactInformation: ContactInformation) {
+    override fun onRegistrationFragmentCInteraction(uri: Int, contactInformation: ContactInformation) {
         this.contactInformation= contactInformation
         container.setCurrentItem(uri)
 
     }
 
-    override fun onFragmentBInteraction(uri: Int, businessProfile: BusinessProfile) {
+    override fun onRegistrationFragmentBInteraction(uri: Int, businessProfile: BusinessProfile) {
         this.businessProfile = businessProfile
         container.setCurrentItem(uri)
 
     }
 
-    override fun onFragmentAInteraction(uri: Int, cred: Credentials) {
+    override fun onRegistrationFragmentAInteraction(uri: Int, cred: Credentials) {
         container.setCurrentItem(uri)
         this.credentials = cred
 
@@ -114,22 +114,22 @@ class TabbedActivity : AppCompatActivity(), FragmentA.OnFragmentAInteractionList
         override fun getItem(position: Int): Fragment {
 
             if(position == 0){
-                return FragmentA.newInstance(credentials,(position + 1).toString())
+                return RegistrationFragmentA.newInstance(credentials,(position + 1).toString())
 
             }else if(position == 1){
-                return FragmentB.newInstance(businessProfile)
+                return RegistrationFragmentB.newInstance(businessProfile)
 
             }else if(position == 2){
-                return FragmentC.newInstance(contactInformation)
+                return RegistrationFragmentC.newInstance(contactInformation)
 
             }else if (position == 3){
-                return FragmentE.newInstance(contactInformation?.address)
+                return RegistrationFragmentD.newInstance(contactInformation?.address)
 
             }else if (position == 4){
-                return FragmentD.newInstance(ownerProfile)
+                return RegistrationFragmentE.newInstance(ownerProfile)
 
             }
-            return FragmentD.newInstance(ownerProfile)
+            return RegistrationFragmentE.newInstance(ownerProfile)
 
 
         }

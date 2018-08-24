@@ -1,3 +1,4 @@
+
 package com.example.unclep.testpages
 
 import android.content.Context
@@ -8,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -19,87 +19,81 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentA.OnFragmentInteractionListener] interface
+ * [RegistrationFragmentD.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentA.newInstance] factory method to
+ * Use the [RegistrationFragmentD.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentA : Fragment() {
+class RegistrationFragmentD : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: Credentials? = null
-    private var param2: String? = null
-    private var listener: OnFragmentAInteractionListener? = null
+    private var address:Address? = null
+    private var listener: OnFragmentInteractionListener? = null
 
-    var email:TextInputEditText? = null
-    var password:TextInputEditText? = null
-    var phoneNumber:TextInputEditText? = null
-    var username:TextInputEditText?= null
+    private var tAddressLine1:TextInputEditText? = null
+    private var tAddressLine2:TextInputEditText? = null
+    private var tAddressCity:TextInputEditText? = null
+    private var tAddressState:TextInputEditText? = null
+    private var tAddressCountry:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getSerializable(ARG_PARAM1) as Credentials?
-            param2 = it.getString(ARG_PARAM2)
+            address = it.getSerializable(ARG_PARAM1) as Address?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        val view: View = inflater!!.inflate(R.layout.fragment_a, container, false)
+        val view: View = inflater!!.inflate(R.layout.reg_fragment_d, container, false)
         val btn: Button = view.findViewById(R.id.next)
 
-        //Initialize view components
-        email = view.findViewById(R.id.credentialsEmail)
-        password = view.findViewById(R.id.credentialsPassword)
-        phoneNumber = view.findViewById(R.id.credentialsPhoneNumber)
-        username = view.findViewById(R.id.businessUsername)
+        tAddressLine1 = view.findViewById(R.id.addressLine1)
+        tAddressLine2 = view.findViewById(R.id.addressLine2)
+        tAddressCity = view.findViewById(R.id.addressCity)
+        tAddressState = view.findViewById(R.id.addressState)
+        tAddressCountry = view.findViewById(R.id.addressCountry)
 
-        /**
-         * Check if credential value is null, if so initialize else set the components with the credentials value
-         */
-        if (param1 != null) {
-            email?.setText(param1?.email)
-            phoneNumber?.setText(param1?.phone_number)
-            password?.setText(param1?.password)
-            username?.setText(param1?.username)
+        if(address != null){
+            tAddressCity?.setText(address?.city)
+            tAddressCountry?.setText(address?.country)
+            tAddressState?.setText(address?.state)
+            tAddressLine1?.setText(address?.addressLine1)
+            tAddressLine2?.setText(address?.addressLine2)
+
         }else{
-            param1 = Credentials("", "","", "")
+            address = Address("","","","","")
         }
 
-        /**
-         * When the next button is clicked, send data back to the activity and open the next fragment
-         */
         btn.setOnClickListener{
             collectDataFromInputs()
-            onButtonPressed(1, param1!!)
-        }
+            onButtonPressed(4, address!!)
 
+        }
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int, credentials: Credentials) {
-        listener?.onFragmentAInteraction(1, credentials)
-    }
-
     fun collectDataFromInputs(){
-        param1?.let {
-            it.phone_number = phoneNumber?.text.toString()
-            it.password = password?.text.toString()
-            it.email = email?.text.toString()
-            it.username = username?.text.toString()
+        address?.let {
+            it.addressLine2 = tAddressLine2?.text.toString()
+            it.addressLine1 = tAddressLine1?.text.toString()
+            it.city = tAddressCity?.text.toString()
+            it.state = tAddressState?.text.toString()
+            it.country = tAddressCountry?.text.toString()
 
             println("Param Object updated")
         }
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
+    fun onButtonPressed(uri: Int, address: Address) {
+        listener?.onRegistrationFragmentDInteraction(uri, address)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentAInteractionListener) {
+        if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
@@ -122,9 +116,9 @@ class FragmentA : Fragment() {
      * (http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnFragmentAInteractionListener {
+    interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentAInteraction(uri: Int, credentials: Credentials)
+        fun onRegistrationFragmentDInteraction(uri: Int, address: Address)
     }
 
     companion object {
@@ -134,15 +128,14 @@ class FragmentA : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentA.
+         * @return A new instance of fragment RegistrationFragmentD.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: Credentials?, param2: String) =
-                FragmentA().apply {
+        fun newInstance(address: Address?) =
+                RegistrationFragmentD().apply {
                     arguments = Bundle().apply {
-                        putSerializable(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putSerializable(ARG_PARAM1, address)
                     }
                 }
     }

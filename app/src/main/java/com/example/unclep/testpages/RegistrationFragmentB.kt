@@ -1,7 +1,6 @@
 package com.example.unclep.testpages
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
@@ -9,83 +8,85 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import java.security.acl.Owner
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentD.OnFragmentInteractionListener] interface
+ * [RegistrationFragmentB.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentD.newInstance] factory method to
+ * Use the [RegistrationFragmentB.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentD : Fragment() {
+class RegistrationFragmentB : Fragment() {
     // TODO: Rename and change types of parameters
-    private var ownerProfile: OwnerProfile? = null
+    private var businessProfile: BusinessProfile? = null
     private var listener: OnFragmentInteractionListener? = null
 
-
-    private var tFirstName:TextInputEditText? = null
-    private var tLastName:TextInputEditText? = null
-    private var tEmail:TextInputEditText? = null
-    private var tPhoneNumber:TextInputEditText? = null
+    private var tName:TextInputEditText? = null
+    private var tCategory:TextInputEditText? = null
+    private var tDescription:TextInputEditText? = null
+    private var tTags:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            ownerProfile = it.getSerializable(ARG_PARAM1) as OwnerProfile?
+            businessProfile = it.getSerializable(ARG_PARAM1) as BusinessProfile?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        val view: View = inflater!!.inflate(R.layout.reg_fragment_b, container, false)
+        val btn: Button = view.findViewById(R.id.next)
 
-        val view: View = inflater!!.inflate(R.layout.fragment_d, container, false)
-        val btn: Button = view.findViewById(R.id.submitButton)
-
-        tEmail = view.findViewById(R.id.ownerEmail)
-        tPhoneNumber = view.findViewById(R.id.ownerPhoneNumber)
-        tFirstName = view.findViewById(R.id.ownerFirstName)
-        tLastName = view.findViewById(R.id.ownerLastName)
-
-
-        if(ownerProfile != null){
-            tEmail?.setText(ownerProfile?.email)
-            tPhoneNumber?.setText(ownerProfile?.phone_number)
-            tFirstName?.setText(ownerProfile?.name)
-            tLastName?.setText(ownerProfile?.lastName)
+        tName = view.findViewById(R.id.businessName)
+        tCategory = view.findViewById(R.id.businessCategory)
+        tDescription = view.findViewById(R.id.businessDescription)
+        tTags = view.findViewById(R.id.businessTags)
+        /**
+         * Check if credential value is null, if so initialize else set the components with the credentials value
+         */
+        if(businessProfile != null){
+            tName?.setText(businessProfile?.name)
+            tCategory?.setText(businessProfile?.category)
+            tDescription?.setText(businessProfile?.description)
+            val toSt = businessProfile?.tags?.joinToString(",")
+            tTags?.setText(toSt)
         }else{
-            ownerProfile = OwnerProfile("","","","")
+            businessProfile = BusinessProfile("","","",null,null,null)
         }
-
+        /**
+         * When the next button is clicked, send data back to the activity and open the next fragment
+         */
         btn.setOnClickListener{
             collectDataFromInputs()
-            onButtonPressed(ownerProfile)
+            onButtonPressed(2, businessProfile!!)
         }
 
         return view
     }
 
     fun collectDataFromInputs(){
-        ownerProfile?.let {
-            it.lastName = tLastName?.text.toString()
-            it.name = tFirstName?.text.toString()
-            it.phone_number = tPhoneNumber?.text.toString()
-            it.email = tEmail?.text.toString()
+        businessProfile?.let {
+            it.name = tName?.text.toString()
+            it.category = tCategory?.text.toString()
+            it.tags = null// tTags?.text.toString()
+            it.description = tDescription?.text.toString()
+
+            println("Param Object updated")
         }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(ownerProfile: OwnerProfile?) {
-        listener?.onFragmentDInteraction(ownerProfile!!)
+    fun onButtonPressed(uri: Int, businessProfile: BusinessProfile) {
+        listener?.onRegistrationFragmentBInteraction(2, businessProfile)
     }
 
     override fun onAttach(context: Context) {
@@ -115,7 +116,7 @@ class FragmentD : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentDInteraction(ownerProfile: OwnerProfile)
+        fun onRegistrationFragmentBInteraction(uri: Int, businessProfile: BusinessProfile)
     }
 
     companion object {
@@ -125,14 +126,14 @@ class FragmentD : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentD.
+         * @return A new instance of fragment RegistrationFragmentB.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(ownerProfile: OwnerProfile?) =
-                FragmentD().apply {
+        fun newInstance(param1: BusinessProfile?) =
+                RegistrationFragmentB().apply {
                     arguments = Bundle().apply {
-                        putSerializable(ARG_PARAM1, ownerProfile)
+                        putSerializable(ARG_PARAM1, param1)
                     }
                 }
     }

@@ -1,7 +1,6 @@
 package com.example.unclep.testpages
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
@@ -20,13 +19,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentC.OnFragmentInteractionListener] interface
+ * [RegistrationFragmentC.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentC.newInstance] factory method to
+ * Use the [RegistrationFragmentC.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentC : Fragment() {
+class RegistrationFragmentC : Fragment() {
     // TODO: Rename and change types of parameters
     private var contactInformation: ContactInformation? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -53,7 +52,7 @@ class FragmentC : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater!!.inflate(R.layout.fragment_c, container, false)
+        val view: View = inflater!!.inflate(R.layout.reg_fragment_c, container, false)
         val btn: Button = view.findViewById(R.id.next)
 
         tContactEmail = view.findViewById(R.id.businessEmail)
@@ -106,7 +105,7 @@ class FragmentC : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Int, contactInformation: ContactInformation) {
-        listener?.onFragmentCInteraction(3, contactInformation)
+        listener?.onRegistrationFragmentCInteraction(3, contactInformation)
     }
 
     override fun onAttach(context: Context) {
@@ -136,7 +135,7 @@ class FragmentC : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentCInteraction(uri: Int, contactInformation: ContactInformation)
+        fun onRegistrationFragmentCInteraction(uri: Int, contactInformation: ContactInformation)
     }
 
     companion object {
@@ -146,12 +145,12 @@ class FragmentC : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentC.
+         * @return A new instance of fragment RegistrationFragmentC.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: ContactInformation?) =
-                FragmentC().apply {
+                RegistrationFragmentC().apply {
                     arguments = Bundle().apply {
                         putSerializable(ARG_PARAM1, param1)
                     }

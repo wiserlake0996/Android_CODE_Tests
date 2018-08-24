@@ -1,7 +1,6 @@
 package com.example.unclep.testpages
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
@@ -14,80 +13,77 @@ import android.widget.Button
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentB.OnFragmentInteractionListener] interface
+ * [RegistrationRegistrationFragmentD.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentB.newInstance] factory method to
+ * Use the [RegistrationRegistrationFragmentD.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentB : Fragment() {
+class RegistrationFragmentE : Fragment() {
     // TODO: Rename and change types of parameters
-    private var businessProfile: BusinessProfile? = null
+    private var ownerProfile: OwnerProfile? = null
     private var listener: OnFragmentInteractionListener? = null
 
-    private var tName:TextInputEditText? = null
-    private var tCategory:TextInputEditText? = null
-    private var tDescription:TextInputEditText? = null
-    private var tTags:TextInputEditText? = null
+
+    private var tFirstName:TextInputEditText? = null
+    private var tLastName:TextInputEditText? = null
+    private var tEmail:TextInputEditText? = null
+    private var tPhoneNumber:TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            businessProfile = it.getSerializable(ARG_PARAM1) as BusinessProfile?
+            ownerProfile = it.getSerializable(ARG_PARAM1) as OwnerProfile?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater!!.inflate(R.layout.fragment_b, container, false)
-        val btn: Button = view.findViewById(R.id.next)
 
-        tName = view.findViewById(R.id.businessName)
-        tCategory = view.findViewById(R.id.businessCategory)
-        tDescription = view.findViewById(R.id.businessDescription)
-        tTags = view.findViewById(R.id.businessTags)
-        /**
-         * Check if credential value is null, if so initialize else set the components with the credentials value
-         */
-        if(businessProfile != null){
-            tName?.setText(businessProfile?.name)
-            tCategory?.setText(businessProfile?.category)
-            tDescription?.setText(businessProfile?.description)
-            val toSt = businessProfile?.tags?.joinToString(",")
-            tTags?.setText(toSt)
+        val view: View = inflater!!.inflate(R.layout.reg_fragment_e, container, false)
+        val btn: Button = view.findViewById(R.id.submitButton)
+
+        tEmail = view.findViewById(R.id.ownerEmail)
+        tPhoneNumber = view.findViewById(R.id.ownerPhoneNumber)
+        tFirstName = view.findViewById(R.id.ownerFirstName)
+        tLastName = view.findViewById(R.id.ownerLastName)
+
+
+        if(ownerProfile != null){
+            tEmail?.setText(ownerProfile?.email)
+            tPhoneNumber?.setText(ownerProfile?.phone_number)
+            tFirstName?.setText(ownerProfile?.name)
+            tLastName?.setText(ownerProfile?.lastName)
         }else{
-            businessProfile = BusinessProfile("","","",null,null,null)
+            ownerProfile = OwnerProfile("","","","")
         }
-        /**
-         * When the next button is clicked, send data back to the activity and open the next fragment
-         */
+
         btn.setOnClickListener{
             collectDataFromInputs()
-            onButtonPressed(2, businessProfile!!)
+            onButtonPressed(ownerProfile)
         }
 
         return view
     }
 
     fun collectDataFromInputs(){
-        businessProfile?.let {
-            it.name = tName?.text.toString()
-            it.category = tCategory?.text.toString()
-            it.tags = null// tTags?.text.toString()
-            it.description = tDescription?.text.toString()
-
-            println("Param Object updated")
+        ownerProfile?.let {
+            it.lastName = tLastName?.text.toString()
+            it.name = tFirstName?.text.toString()
+            it.phone_number = tPhoneNumber?.text.toString()
+            it.email = tEmail?.text.toString()
         }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int, businessProfile: BusinessProfile) {
-        listener?.onFragmentBInteraction(2, businessProfile)
+    fun onButtonPressed(ownerProfile: OwnerProfile?) {
+        listener?.onRegistrationFragmentEInteraction(ownerProfile!!)
     }
 
     override fun onAttach(context: Context) {
@@ -117,7 +113,7 @@ class FragmentB : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentBInteraction(uri: Int, businessProfile: BusinessProfile)
+        fun onRegistrationFragmentEInteraction(ownerProfile: OwnerProfile)
     }
 
     companion object {
@@ -127,14 +123,14 @@ class FragmentB : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentB.
+         * @return A new instance of fragment RegistrationRegistrationFragmentD.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: BusinessProfile?) =
-                FragmentB().apply {
+        fun newInstance(ownerProfile: OwnerProfile?) =
+                RegistrationFragmentE().apply {
                     arguments = Bundle().apply {
-                        putSerializable(ARG_PARAM1, param1)
+                        putSerializable(ARG_PARAM1, ownerProfile)
                     }
                 }
     }
