@@ -20,7 +20,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".TabbedActivity"
+            android:name=".RegistrationTabbedActivity"
             android:label="@string/title_activity_tabbed"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
